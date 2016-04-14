@@ -18,12 +18,18 @@
     <ClCompile Include="src\XsbmBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\RenderProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\XsbmGraphics.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\XsbmBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\RenderProgram.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

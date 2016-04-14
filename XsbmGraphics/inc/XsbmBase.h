@@ -3,5 +3,5 @@
 #include <string>
 namespace xsbm{
 	std::string LoadFile(std::string const& file_name);
-};
+}
 #endif
