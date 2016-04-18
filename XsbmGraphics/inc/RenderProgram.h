@@ -11,6 +11,7 @@ namespace xsbm{
 		GLint uniform_location_;
 		GLuint program_handle_;
 		GLsizei value_size_;
+		int value_count_;
 		GLuint texture_unit_;
 
 		RenderProgramUniform(){}
@@ -18,12 +19,16 @@ namespace xsbm{
 			GLenum value_type,
 			GLint uniform_location,
 			GLuint program_handle,
-			GLsizei value_size):
+			GLsizei value_size,
+			int value_count,
+			GLuint texture_unit):
 			name_in_shader_(name_in_shader),
 			value_type_(value_type),
 			uniform_location_(uniform_location),
 			program_handle_(program_handle),
-			value_size_(value_size){}
+			value_size_(value_size),
+			value_count_(value_count),
+			texture_unit_(texture_unit){}
 		~RenderProgramUniform(){}
 		bool operator<<(const void* value)	const;
 	};
