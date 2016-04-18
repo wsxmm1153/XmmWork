@@ -28,12 +28,22 @@ case (VariableInfoInGLProgram::var_d):{xsbmProgramUniformdvMat(dimension);break;
 }}
 
 namespace xsbm{
-	bool RenderProgramUniform::operator<<(const void* value) const
+
+	RenderProgramUniform::RenderProgramUniform(std::string name_in_shader,
+		GLenum value_type,
+		GLint uniform_location,
+		GLuint program_handle,
+		GLsizei value_size,
+		int value_count,
+		GLuint texture_unit) :
+		name_in_shader_(name_in_shader),
+		value_type_(value_type),
+		uniform_location_(uniform_location),
+		program_handle_(program_handle),
+		value_size_(value_size),
+		value_count_(value_count),
+		texture_unit_(texture_unit)
 	{
-#ifdef STRICT_CHECK_ERROR
-		assert(program_handle_);
-		assert(!glGetError());
-#endif // STRICT_CHECK_ERROR
 		int i = 0;
 		for (; i < XSBM_TYPEINGLPROGRAM_ARRAYINDEX_COUNT; i++)
 		{
@@ -43,6 +53,22 @@ namespace xsbm{
 #ifdef STRICT_CHECK_ERROR
 		assert(i < XSBM_TYPEINGLPROGRAM_ARRAYINDEX_COUNT);
 #endif
+		xsbm_enum_index_ = i;
+	}
+
+
+	bool RenderProgramUniform::operator<<(const void* value) const
+	{
+#ifdef STRICT_CHECK_ERROR
+		assert(program_handle_);
+		assert(uniform_location_ >= 0);
+		assert(xsbm_enum_index_ >= 0);
+		assert(xsbm_enum_index_ < XSBM_TYPEINGLPROGRAM_ARRAYINDEX_COUNT);
+		assert(!glGetError());
+#endif // STRICT_CHECK_ERROR
+
+		int i = xsbm_enum_index_;
+
 		switch (TypeInGLProgram_VariableInfo[i].dimension_)
 		{
 		default:
@@ -92,4 +118,6 @@ namespace xsbm{
 
 		return true;
 	}
+
+
 }

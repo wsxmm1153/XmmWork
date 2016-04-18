@@ -1,6 +1,7 @@
 #ifndef XSBM_GRAPHICS_INC_RENDERPROGRAM_H_
 #define XSBM_GRAPHICS_INC_RENDERPROGRAM_H_
 #include <string>
+#include <map>
 #include "GL/glew.h"
 namespace xsbm{
 
@@ -13,6 +14,7 @@ namespace xsbm{
 		GLsizei value_size_;
 		int value_count_;
 		GLuint texture_unit_;
+		int xsbm_enum_index_;
 
 		RenderProgramUniform(){}
 		RenderProgramUniform(std::string name_in_shader,
@@ -21,14 +23,7 @@ namespace xsbm{
 			GLuint program_handle,
 			GLsizei value_size,
 			int value_count,
-			GLuint texture_unit):
-			name_in_shader_(name_in_shader),
-			value_type_(value_type),
-			uniform_location_(uniform_location),
-			program_handle_(program_handle),
-			value_size_(value_size),
-			value_count_(value_count),
-			texture_unit_(texture_unit){}
+			GLuint texture_unit);
 		~RenderProgramUniform(){}
 		bool operator<<(const void* value)	const;
 	};
@@ -37,10 +32,15 @@ namespace xsbm{
 	{
 	public:
 		RenderProgram();
-		~RenderProgram();
+		virtual ~RenderProgram();
+		bool CompileFromFiles(const std::string& program_config_file);
+		bool CompileFromStrings(const std::string& vertex_shader,
+			const std::string& fragment_shader);
 
+		const RenderProgramUniform& operator[](const std::string& name_in_shader)const;
 	private:
-
+		bool AnalyzeProgram();
+		std::map<std::string, RenderProgramUniform> uniform_map_;
 	};
 }
 #endif
